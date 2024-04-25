@@ -34,9 +34,11 @@ public class AsteroidSpawner : MonoBehaviour
     void Update()
     {
         SpawnAsteroid(staticAsteroid);
+
+        AsteroidCountControll();
     }
 
-    GameObject? SpawnAsteroid(GameObject prefab)
+    void SpawnAsteroid(GameObject prefab)
     {
         //generyczna funkcja sluzaca do wylosowania wspolrzednych i umieszczenia
         //w tym miejscu asteroidy z prefaba
@@ -52,19 +54,12 @@ public class AsteroidSpawner : MonoBehaviour
         randomPosition += player.position;
 
         //sprawdz czy miejsce jest wolne
-        //! oznacza "nie" czyli nie ma nic w promieniu 5 jednostek od miejsca randomPosition
+        //! oznacza "nie" czyli nie ma nic w promieniu jednostek od miejsca randomPosition
         if (!Physics.CheckSphere(randomPosition, safeDistance))
         {
             //stworz zmienn¹ asteroid, zespawnuj nowy asteroid korzystaj¹c z prefaba
             // w losowym miejscu, z rotacj¹ domyœln¹ (Quaternion.identity)
             GameObject asteroid = Instantiate(staticAsteroid, randomPosition, Quaternion.identity);
-
-            //zwróæ asteroidê jako wynik dzia³ania
-            return asteroid;
-        }
-        else
-        {
-            return null;
         }
 
     }

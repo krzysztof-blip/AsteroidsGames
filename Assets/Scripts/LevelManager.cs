@@ -1,32 +1,33 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
     Transform player;
-    //odleg³oœc od koñca poziomu
+    //odlegÂ³oÅ“c od koÃ±ca poziomu
     public float levelExitDistance = 100;
-    //punkt koñca poziomu
+    //punkt koÃ±ca poziomu
     public Vector3 exitPosition;
     public GameObject exitPrefab;
-    //zmienna - flaga - oznaczaj¹ca ukoñczenie poziomu
+    //zmienna - flaga - oznaczajÂ¹ca ukoÃ±czenie poziomu
     public bool levelComplete = false;
-    //taka sama zmienna tylko jeœli przegramy
+    //taka sama zmienna tylko jeÅ“li przegramy
     public bool levelFailed = false;
     // Start is called before the first frame update
     void Start()
     {
         //znajdz gracza
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        //wylosuj pozycjê na kole o œrednicy 100 jednostek
-        Vector2 spawnCircle = Random.insideUnitCircle; //losowa pozycja x,y wewn¹trz ko³a o r=1
-        //chcemy tylko pozycjê na okrêgu, a nie wewn¹trz ko³a
-        spawnCircle = spawnCircle.normalized; //pozycje x,y w odleg³oœci 1 od œrodka
-        spawnCircle *= levelExitDistance; //pozycja x,y w odleg³oœci 100 od œrodka
+        //wylosuj pozycjÃª na kole o Å“rednicy 100 jednostek
+        Vector2 spawnCircle = Random.insideUnitCircle; //losowa pozycja x,y wewnÂ¹trz koÂ³a o r=1
+        //chcemy tylko pozycjÃª na okrÃªgu, a nie wewnÂ¹trz koÂ³a
+        spawnCircle = spawnCircle.normalized; //pozycje x,y w odlegÂ³oÅ“ci 1 od Å“rodka
+        spawnCircle *= levelExitDistance; //pozycja x,y w odlegÂ³oÅ“ci 100 od Å“rodka
         //konwertujemy do Vector3
         //podstawiamy: x=x, y=0, z=y
         exitPosition = new Vector3(spawnCircle.x, 0, spawnCircle.y);
+        Instantiate(exitPrefab, exitPosition, Quaternion.identity);
 
         //wystartuj czas
         Time.timeScale = 1f;
@@ -37,23 +38,29 @@ public class LevelManager : MonoBehaviour
     {
 
     }
-    //funkcja jest utuchamiana kiedy dany poziom (level) jest zakoñczony sukcesem
+    //funkcja jest utuchamiana kiedy dany poziom (level) jest zakoÃ±czony sukcesem
     public void OnSuccess()
     {
-        //zatrzymaj fizykê gry
+        //zatrzymaj fizykÃª gry
         Time.timeScale = 0f;
-        //ustaw flagê - poziom zakoñczony
+        //ustaw flagÃª - poziom zakoÃ±czony
         levelComplete = true;
-        //odegraj dŸwiêk koñca poziomu
-        Camera.main.transform.Find("LevelCompleteSound").GetComponent<AudioSource>().Play();
+        //zatrzymaj ambientowa muzyczke
+        Camera.main.transform.GetComponent<AudioSource>().Stop();
+        //odegraj dÅ¸wiÃªk koÃ±ca poziomu
+        //Camera.main.transform.Find("LevelCompleteSound").GetComponent<AudioSource>().Play();
+        //przenisione do elementu interfejsu
     }
     public void OnFailure()
     {
-        //zatrzymaj fizykê
+        //zatrzymaj fizykÃª
         Time.timeScale = 0f;
-        //ustaw flagê, ¿e nie uda³o siê ukoñczyæ poziomu
+        //ustaw flagÃª, Â¿e nie udaÂ³o siÃª ukoÃ±czyÃ¦ poziomu
         levelFailed = true;
+        //zatrzymaj ambientowa muzyczke
+        Camera.main.transform.GetComponent<AudioSource>().Stop();
         //odgrywmay dzwiek przegranej
-        Camera.main.transform.Find("GameOverSound").GetComponent<AudioSource>().Play();
+        //Camera.main.transform.Find("GameOverSound").GetComponent<AudioSource>().Play();
+        //przenisione do elementu interfejsu
     }
 }
