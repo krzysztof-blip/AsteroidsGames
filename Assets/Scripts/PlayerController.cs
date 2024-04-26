@@ -91,12 +91,12 @@ public class PlayerController : MonoBehaviour
         //wyciagnij z menadzera poziomu pozycje wyjscia
         Vector3 target = levelManagerObject.GetComponent<LevelManager>().exitPosition;
         //obroc znacznik w strone wyjscia
-        transform.Find("NavUI").Find("TargetMarker").LookAt(target);
+        transform.Find("NavUI").Find("TargetMarket").LookAt(target);
         //zmien ilosc procentwo widoczna w interfejsie
         //TODO: poprawiæ wyœwietlanie stanu os³on!
         TextMeshProUGUI shieldText =
             GameObject.Find("Canvas").transform.Find("ShieldCapacityText").GetComponent<TextMeshProUGUI>();
-        shieldText.text = " Shield: " + (shieldCapacity * 100).ToString("F0") + "%";
+        shieldText.text = " Shield: " + (shieldCapacity*100).ToString("F0") + "%";
 
         //sprawdzamy czy poziom siê zakoñczy³ i czy musimy wyœwietliæ ekran koñcowy
         if (levelManagerObject.GetComponent<LevelManager>().levelComplete)
@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
         if (levelManagerObject.GetComponent<LevelManager>().levelFailed)
         {
             //znajdz canvas (interfejs), znajdz w nim ekran konca poziomu i go w³¹cz
-            GameObject.Find("Canvas").transform.Find("GameOverScreen").gameObject.SetActive(true);
+            GameObject.Find("Canvas").transform.Find("GameOver").gameObject.SetActive(true);
         }
     }
 
